@@ -11,8 +11,8 @@ let tpl = `
 <br>
 <input type="password" id ="password2" name="password2" placeholder="Repetir clave"  class="passwRep" class="inputs">
 <br>
-<input type="text" name="claveGenerada" class="claveGenerada"> 
-<button type="button" onclick="generarClave()">Generar clave</button> 
+<p type="claveGenerada" name="claveGenerada" class="claveGenerada"> </p>
+<button type="button" onclick="generarClave()">Generar clave</button>
 <button type="button" onclick="copiarClave()">Copiar</button>
 <br>
 <br>
@@ -64,6 +64,7 @@ let generarClave = function () {
     }
     
     claveGenerada.value = pswFinal //Resultado final del proceso, una clave generada de forma aleatoria que cumple las condiciones
+    claveGenerada.innerText = pswFinal
 }
 
     //--------------------FIN DE LA FUNCION generarClave--------------------//
@@ -76,49 +77,56 @@ let copiarClave = function () {
 
 //--------------------FIN DE LA FUNCION copiarClave--------------------//
 
-// Recolectando y verificando los datos ingresados por el usuario
-let verificaDatos = function(datosOk){
-    // let fields  = document.querySelectorAll('.field')
-    // let inputs  = document.querySelectorAll('.inputs')
-    // let passw   = document.querySelectorAll('.passw')
-    // passw = passw[0]
-    // let passwRep = document.querySelectorAll('.passwRep')
-    // console.log("PasswRep: ", passwRep.value)
-
-    // passwRep = passwRep[0]
-    // console.log("PasswRep: ", passwRep)
+// Recolectando y verificando los datos ingresados por el usuario-
+// let verificaDatos = function(datosOk){
+    let passw   = document.querySelectorAll('.passw')
+    passw = passw[0]
+    let passwRep = document.querySelectorAll('.passwRep')
+    console.log("PasswRep: ", passwRep.value)
+    passwRep = passwRep[0]
+//     // console.log("PasswRep: ", passwRep)
 
 
-    // console.log("fields array: ", fields)
-    // console.log("fields length", fields.length)
+//     // console.log("fields array: ", fields)
+//     // console.log("fields length", fields.length)
     
-        let resultVerif = false
-        if (nameContent != ""){
-            resultVerif = true
-        }
-        return resultVerif
+//         let resultVerif = false
+//         if (nameContent != ""){
+//             resultVerif = true
+//         }
+//         return resultVerif
     
-}
-let user = {}
+// }
+// let user = {}
+
+//veremos
+        
+
+
+
+
+
+let guardarUsuario = function () {
+    
+    
+    let fields =  document.querySelectorAll('.field')
+    let user = {}
+    
+    let inputs = document.querySelectorAll('input')
+    let nombre = document.querySelectorAll ('#nombre')
+    nombre = nombre[0]
+    let usuario = document.querySelectorAll ('#usuario')
+    usuario = usuario[0]
+    let password = document.querySelectorAll ('#password')
+    password = password[0]
+    let passwordRep = document.querySelectorAll ('#passwordRep')
+    passwordRep = passwordRep[0]
  
-
-
-
-
-
-let guardarUsuario = function (datosOk) {
     
     let nameContent = document.getElementById("nombre").value
     let passwordContent = document.getElementById("password").value
     let usuarioContent = document.getElementById("usuario").value
-    let resultVerif = verificaDatos(nameContent, passwordContent, usuarioContent) 
-    console.log ("Resultado verificacion :: ", resultVerif)
 
-    console.log("Nombre Ingresado::", nameContent)
-    console.log("Usuario Ingresado::", usuarioContent)
-    console.log("Password ingresado::", passw.value)
-    console.log("inputs", inputs.value)
-    
     //si queda algun campo vacio genera alerta
     if (nameContent ==""  || usuarioContent == "" || passwordContent =="") {
         alert("Debe rellenar todos los campos")
@@ -135,13 +143,11 @@ let guardarUsuario = function (datosOk) {
             
             else {
                 for (let i = 0; i < inputs.length; i++) {
-                    console.log("que tiene: ", fields[i].name, fields[i].value)
-                    user[fields[i].name] = fields[i].value;				
+                    user[inputs[i].name] = inputs[i].value;	
+                    // console.log("que tiene: ", user)			
                 }
             }
-        
-    console.log("user: ", user[nombre])
-
+            
     //Generando un guid unico para el usuario
     let guid = ''
     let guidV = 4
@@ -156,6 +162,7 @@ let guardarUsuario = function (datosOk) {
             guid = guid + "-"
         }
     }
-    console.log ("esta es la gui:: ", guid) 
+    user.Id = guid
+    console.log("Usuario a registrar: ", user)
 
 }
