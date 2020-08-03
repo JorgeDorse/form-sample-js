@@ -152,6 +152,7 @@ let guardarUsuario = function () {
             else if (passw.value != passwRep.value) {
             alert("Contraseñas deben coincidir")
             }
+            //
             
             else {
                 for (let i = 0; i < inputs.length; i++) {
