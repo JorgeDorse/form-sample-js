@@ -126,17 +126,19 @@ let guardarUsuario = function () {
     let passwordContent = document.getElementById("password").value
     let usuarioContent = document.getElementById("usuario").value
 
+        //-------------GENERACION DE ALERTAS POR ALGUN ERROR DE INGRESO-----------//
+
     //Evaluo si el password ingresado contiene los caracteres obligatorios y el largo correcto
-    var validPass = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[%,$,#,@,!,*,^,<,>,?,/,.,,-,:,;,&,+,=]){1})\S{8,12}$/;
-        passwordContent_Ok = false
+    var validPass = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[%,$,#,@,!,*,^,<,>,?,/,.,,,-,:,;,&,+,=]){1})\S{8,12}$/;
+    let passwordContent_Ok = false
+    let ingresoOk = false
+    console.log ("passwordContent::",passwordContent)
     if (validPass.test(passwordContent)) {
         passwordContent_Ok = true;
     } 
         else {
             passwordContent_Ok = false;
         }
-    console.log ("password ingresado :: ", passwordContent_Ok)
-    ingresoOk = false
     //si queda algun campo vacio genera alerta
     if (nameContent ==""  || usuarioContent == "" || passwordContent =="") {
         alert("Debe rellenar todos los campos")
@@ -163,6 +165,7 @@ let guardarUsuario = function () {
     let guid = ''
     let guidV = 4
     
+    //Confirma que todos los datos ingresados son correctos y por lo tanto genera un Id de usuario
     if (passwordContent_Ok && ingresoOk) {
         for (let i = 1; i < guidV +1; i++){
             for (let i = 1; i < 5; i++) {
