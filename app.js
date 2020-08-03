@@ -24,7 +24,7 @@ formUsuario.innerHTML = tpl
 let abc 	= ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 let mayus	= ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 let num		= [0,1,2,3,4,5,6,7,8,9]
-let symbol  = ['-',',','.',':',';','/','$','%','&','*','+','@','!','^','<','>','?','=']
+let symbol  = ['-',',','.',':',';','/','$','#','%','&','*','+','@','!','^','<','>','?','=']
 let todos   = abc.concat(mayus).concat(num).concat(symbol)
 
 let claveGenerada = document.querySelectorAll('.claveGenerada')
@@ -82,7 +82,6 @@ let copiarClave = function () {
     let passw   = document.querySelectorAll('.passw')
     passw = passw[0]
     let passwRep = document.querySelectorAll('.passwRep')
-    console.log("PasswRep: ", passwRep.value)
     passwRep = passwRep[0]
 //     // console.log("PasswRep: ", passwRep)
 
@@ -127,6 +126,17 @@ let guardarUsuario = function () {
     let passwordContent = document.getElementById("password").value
     let usuarioContent = document.getElementById("usuario").value
 
+    //Evaluo si el password ingresado contiene los caracteres obligatorios y el largo correcto
+    var validPass = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[%,$,#,@,!,*,^,<,>,?,/,.,,-,:,;,&,+,=]){1})\S{8,12}$/;
+        passwordContent_Ok = false
+    if (validPass.test(passwordContent)) {
+        passwordContent_Ok = true;
+    } 
+        else {
+            passwordContent_Ok = false;
+        }
+    console.log ("password ingresado :: ", passwordContent_Ok)
+    ingresoOk = false
     //si queda algun campo vacio genera alerta
     if (nameContent ==""  || usuarioContent == "" || passwordContent =="") {
         alert("Debe rellenar todos los campos")
@@ -143,7 +153,8 @@ let guardarUsuario = function () {
             
             else {
                 for (let i = 0; i < inputs.length; i++) {
-                    user[inputs[i].name] = inputs[i].value;	
+                    user[inputs[i].name] = inputs[i].value;
+                    ingresoOk = true	
                     // console.log("que tiene: ", user)			
                 }
             }
@@ -151,18 +162,21 @@ let guardarUsuario = function () {
     //Generando un guid unico para el usuario
     let guid = ''
     let guidV = 4
-
-    for (let i = 1; i < guidV +1; i++){
-        for (let i = 1; i < 5; i++) {
-            //Elegir un indice aleatorio del diccionario
-            let rand = Math.floor( Math.random() * num.length)
-            guid = guid + rand   
+    
+    if (passwordContent_Ok && ingresoOk) {
+        for (let i = 1; i < guidV +1; i++){
+            for (let i = 1; i < 5; i++) {
+                //Elegir un indice aleatorio del diccionario
+                let rand = Math.floor( Math.random() * num.length)
+                guid = guid + rand   
+            }
+            if (i < guidV) {
+                guid = guid + "-"
+            }
         }
-        if (i < guidV) {
-            guid = guid + "-"
-        }
+        user.Id = guid
     }
-    user.Id = guid
+    
     console.log("Usuario a registrar: ", user)
 
 }
