@@ -2,7 +2,7 @@ let formUsuario = document.querySelectorAll('#formUsuario')
 formUsuario = formUsuario[0]
 
 let tpl = `
-<form>
+<form id="Formulario">
 <input type="text" name="nombre" placeholder="Nombre y Apellido" id="nombre" class="field" class="inputs">
 <br>
 <input type="text" name="usuario" placeholder="Nombre de usuario" id="usuario" class="field" class="inputs">
@@ -21,7 +21,7 @@ let tpl = `
 ` 			
 formUsuario.innerHTML = tpl
 
-let abc 	= ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+let abc 	= ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 let mayus	= ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 let num		= [0,1,2,3,4,5,6,7,8,9]
 let symbol  = ['-',',','.',':',';','/','$','#','%','&','*','+','@','!','^','<','>','?','=']
@@ -78,32 +78,10 @@ let copiarClave = function () {
 //--------------------FIN DE LA FUNCION copiarClave--------------------//
 
 // Recolectando y verificando los datos ingresados por el usuario-
-// let verificaDatos = function(datosOk){
     let passw   = document.querySelectorAll('.passw')
     passw = passw[0]
     let passwRep = document.querySelectorAll('.passwRep')
     passwRep = passwRep[0]
-//     // console.log("PasswRep: ", passwRep)
-
-
-//     // console.log("fields array: ", fields)
-//     // console.log("fields length", fields.length)
-    
-//         let resultVerif = false
-//         if (nameContent != ""){
-//             resultVerif = true
-//         }
-//         return resultVerif
-    
-// }
-// let user = {}
-
-//veremos
-        
-
-
-
-
 
 let guardarUsuario = function () {
     
@@ -132,7 +110,6 @@ let guardarUsuario = function () {
     var validPass = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})(?=(?:.*[%,$,#,@,!,*,^,<,>,?,/,.,,,-,:,;,&,+,=]){1})\S{8,12}$/;
     let passwordContent_Ok = false
     let ingresoOk = false
-    console.log ("passwordContent::",passwordContent)
     if (validPass.test(passwordContent)) {
         passwordContent_Ok = true;
     } 
@@ -143,44 +120,40 @@ let guardarUsuario = function () {
     if (nameContent ==""  || usuarioContent == "" || passwordContent =="") {
         alert("Debe rellenar todos los campos")
     }       
-            //si el largo de la contraseña no es el correcto genera alerta
-            else if (passw.value.length <= 7 || passw.value.length > 12) {
-            alert("La contraseña debe tener entre 8 y 12 dígitos")	
-            }
-
-            //si las contraseñas son distintas genera alerta
-            else if (passw.value != passwRep.value) {
-            alert("Contraseñas deben coincidir")
-            }
-            //
-            
-            else {
-                for (let i = 0; i < inputs.length; i++) {
-                    user[inputs[i].name] = inputs[i].value;
-                    ingresoOk = true	
-                    // console.log("que tiene: ", user)			
-                }
-            }
-            
-    //Generando un guid unico para el usuario
-    let guid = ''
-    let guidV = 4
-    
-    //Confirma que todos los datos ingresados son correctos y por lo tanto genera un Id de usuario
-    if (passwordContent_Ok && ingresoOk) {
-        for (let i = 1; i < guidV +1; i++){
-            for (let i = 1; i < 5; i++) {
-                //Elegir un indice aleatorio del diccionario
-                let rand = Math.floor( Math.random() * num.length)
-                guid = guid + rand   
-            }
-            if (i < guidV) {
-                guid = guid + "-"
-            }
+        //si el largo de la contraseña no es el correcto genera alerta
+        else if (passw.value.length <= 7 || passw.value.length > 12) {
+        alert("La contraseña debe tener entre 8 y 12 dígitos")	
         }
-        user.Id = guid
-    }
-    
-    console.log("Usuario a registrar: ", user)
 
+        //si las contraseñas son distintas genera alerta
+        else if (passw.value != passwRep.value) {
+        alert("Contraseñas deben coincidir")
+        }
+        
+        else {
+            //Dado que los datos ingresados son los correctos, carga los datos al objeto "user" y genero un Id
+            if (passwordContent_Ok) {
+                for (let i = 0; i < inputs.length - 1; i++) {
+                    user[inputs[i].name] = inputs[i].value;			
+                }
+                //Generando un guid unico para el usuario
+                let guid = ''
+                let guidV = 4
+                for (let i = 1; i < guidV +1; i++){
+                    for (let i = 1; i < 5; i++) {
+                        //Elegir un indice aleatorio del diccionario
+                        let rand = Math.floor( Math.random() * num.length)
+                        guid = guid + rand   
+                    }
+                    if (i < guidV) {
+                        guid = guid + "-"
+                    }
+                }
+                user.Id = guid
+            } 
+        alert ("Usuario " + user.usuario + " registrado correctamente")
+        document.getElementById("Formulario").reset();
+        claveGenerada.innerText = ""  
+        claveGenerada.value = ""      
+        }
 }
